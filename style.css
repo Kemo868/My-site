@@ -1,0 +1,22 @@
+body {
+font-family: Arial, sans-serif;
+}
+h1 {
+text-align: center;
+}
+#star-list, #star-details {
+margin: 20px;
+}
+#add-star-form {
+margin: 20px;
+}
+form {
+display: flex;
+flex-direction: column;
+}
+label, input, textarea, button {
+margin: 5px 0;
+}
+textarea {
+resize: none;
+}
