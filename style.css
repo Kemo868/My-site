@@ -1,22 +1,28 @@
 body {
-font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
 }
+
 h1 {
-text-align: center;
+    text-align: center;
 }
+
 #star-list, #star-details {
-margin: 20px;
+    margin: 20px;
 }
+
 #add-star-form {
-margin: 20px;
+    margin: 20px;
 }
+
 form {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
+
 label, input, textarea, button {
-margin: 5px 0;
+    margin: 5px 0;
 }
+
 textarea {
-resize: none;
+    resize: none;
 }
