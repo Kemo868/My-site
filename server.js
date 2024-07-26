@@ -1,51 +1,58 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const starList = document.getElementById('star-list');
-    const starDetails = document.getElementById('star-details');
-    const addStarButton = document.getElementById('add-star-button');
-    const addStarForm = document.getElementById('add-star-form');
-    const saveStarButton = document.getElementById('save-star-button');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const app = express();
+const PORT = 3000;
 
-    const fetchStars = async () => {
-        const response = await fetch('http://localhost:3000/api/stars');
-        const stars = await response.json();
-        renderStarList(stars);
-    };
+app.use(cors());
+app.use(bodyParser.json());
 
-    const renderStarList = (stars) => {
-        starList.innerHTML = '<h2>Stars</h2>';
-        stars.forEach(star => {
-            const starItem = document.createElement('div');
-            starItem.textContent = star.name;
-            starItem.addEventListener('click', () => showStarDetails(star));
-            starList.appendChild(starItem);
-        });
-    };
+let stars = require('./stars.json');
 
-    const showStarDetails = (star) => {
-        starDetails.innerHTML = `
-            <h2>${star.name}</h2>
-            <p>${star.biography}</p>
-            <h3>Achievements</h3>
-            <ul>${star.achievements.map(a => `<li>${a.title} (${a.year}): ${a.description}</li>`).join('')}</ul>
-            <h3>Contributions</h3>
-            <ul>${star.contributions.map(c => `<li>${c.title}: ${c.description}</li>`).join('')}</ul>
-        `;
-    };
+app.get('/api/stars', (req, res) => {
+    res.json(stars);
+});
 
-    addStarButton.addEventListener('click', () => {
-        addStarForm.style.display = 'block';
-    });
+app.get('/api/stars/:id', (req, res) => {
+    const star = stars.find(s => s.id === parseInt(req.params.id));
+    if (star) {
+        res.json(star);
+    } else {
+        res.status(404).send('Star not found');
+    }
+});
 
-    saveStarButton.addEventListener('click', async () => {
-        const name = document.getElementById('name').value;
-        const biography = document.getElementById('biography').value;
-        const achievements = document.getElementById('achievements').value.trim().split('\n').map(line => {
-            const [title, year, description] = line.split(',');
-            return { title, year: parseInt(year), description };
-        });
-        const contributions = document.getElementById('contributions').value.trim().split('\n').map(line => {
-            const [title, description] = line.split(',');
-            return { title, description };
-        });
+app.post('/api/stars', (req, res) => {
+    const newStar = req.body;
+    newStar.id = stars.length + 1;
+    stars.push(newStar);
+    fs.writeFileSync('./stars.json', JSON.stringify(stars, null, 2));
+    res.status(201).json(newStar);
+});
 
-        const newStar = { name, biography };
+app.put('/api/stars/:id', (req, res) => {
+    const star = stars.find(s => s.id === parseInt(req.params.id));
+    if (star) {
+        Object.assign(star, req.body);
+        fs.writeFileSync('./stars.json', JSON.stringify(stars, null, 2));
+        res.json(star);
+    } else {
+        res.status(404).send('Star not found');
+    }
+});
+
+app.delete('/api/stars/:id', (req, res) => {
+    const index = stars.findIndex(s => s.id === parseInt(req.params.id));
+    if (index !== -1) {
+        stars.splice(index, 1);
+        fs.writeFileSync('./stars.json', JSON.stringify(stars, null, 2));
+        res.json({ message: `Star with ID ${req.params.id} has been deleted.` });
+    } else {
+        res.status(404).send('Star not found');
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
