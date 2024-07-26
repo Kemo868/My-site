@@ -48,4 +48,4 @@ document.addEventListener('DOMContentLoaded', () => {
             return { title, description };
         });
 
-        const newStar = { name, biography
+        const newStar = { name, biography };
