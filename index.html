@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Party Stars</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <h1>Party Stars</h1>
     <div id="star-list"></div>
     <div id="star-details"></div>
     <button id="add-star-button">Add Star</button>
 
-    <div id="add-star-form" style="display: none;">
-        <h2>Add New Star</h2>
-        <form>
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name"><br>
-            <label for="biography">Biography:</label><br>
-            <textarea id="biography" name="biography"></textarea><br>
-            <label for="achievements">Achievements:</label><br>
-            <textarea id="achievements" name="achievements" placeholder="Title,Year,Description\n"></textarea><br>
-            <label for="contributions">Contributions:</label><br>
-            <textarea id="contributions" name="contributions" placeholder="Title,Description\n"></textarea><br>
-            <button type="button" id="save-star-button">Save Star</button>
-        </form>
+    <div id="add-star-form" style="display: none">
+      <h2>Add New Star</h2>
+      <form>
+        <label for="name">Name:</label><br />
+        <input type="text" id="name" name="name" /><br />
+        <label for="biography">Biography:</label><br />
+        <textarea id="biography" name="biography"></textarea><br />
+        <label for="achievements">Achievements:</label><br />
+        <textarea
+          id="achievements"
+          name="achievements"
+          placeholder="Title,Year,Description\n"
+        ></textarea
+        ><br />
+        <label for="contributions">Contributions:</label><br />
+        <textarea
+          id="contributions"
+          name="contributions"
+          placeholder="Title,Description\n"
+        ></textarea
+        ><br />
+        <button type="button" id="save-star-button">Save Star</button>
+      </form>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
